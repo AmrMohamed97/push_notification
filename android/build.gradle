@@ -1,0 +1,29 @@
+allprojects {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    
+}
+// dependencies {
+        
+//         implementation 'androidx.window:window:1.0.0'
+//         implementation 'androidx.window:window-java:1.0.0'
+//     // Add any other dependencies here
+// }
+// android {
+            // compileSdk 34
+//     }
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
