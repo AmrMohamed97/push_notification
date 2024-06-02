@@ -9,12 +9,14 @@ class TestLocalNotification extends StatefulWidget {
   State<TestLocalNotification> createState() => _TestLocalNotificationState();
 }
 
+//--
 class _TestLocalNotificationState extends State<TestLocalNotification> {
   @override
   void initState() {
     super.initState();
     messagePressListener();
   }
+
   void messagePressListener() {
     LocalNotificationServices.streamController.stream.listen((event) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
@@ -22,6 +24,7 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
       }));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +46,7 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
                 child: const Text("Basic Notification "),
               ),
               IconButton(
-                onPressed: ()async {
+                onPressed: () async {
                   await LocalNotificationServices.cancelNotification(0);
                 },
                 icon: const Icon(
@@ -63,7 +66,7 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
                 child: const Text("Periodicly Notification "),
               ),
               IconButton(
-                onPressed: () async{
+                onPressed: () async {
                   await LocalNotificationServices.cancelNotification(1);
                 },
                 icon: const Icon(
@@ -83,7 +86,7 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
                 child: const Text("Scheduled Notification "),
               ),
               IconButton(
-                onPressed: () async{
+                onPressed: () async {
                   await LocalNotificationServices.cancelNotification(2);
                 },
                 icon: const Icon(
