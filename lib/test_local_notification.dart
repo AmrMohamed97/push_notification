@@ -2,7 +2,7 @@ import 'package:first_function/local_notification_service.dart';
 import 'package:first_function/next_local_notification.dart';
 import 'package:flutter/material.dart';
 
-class TestLocalNotification extends StatefulWidget {
+class TestLocalNotification extends StatefulWidget  {
   const TestLocalNotification({super.key});
 
   @override
@@ -10,12 +10,19 @@ class TestLocalNotification extends StatefulWidget {
 }
 
 //--
-class _TestLocalNotificationState extends State<TestLocalNotification> {
-  @override
-  void initState() {
-    super.initState();
-    messagePressListener();
-  }
+class _TestLocalNotificationState extends State<TestLocalNotification>  with TickerProviderStateMixin{
+ late AnimationController _animationController;
+
+@override
+void initState() {
+  super.initState();
+  messagePressListener();
+  _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 200),
+  );
+}
+
 
   void messagePressListener() {
     LocalNotificationServices.streamController.stream.listen((event) {
@@ -45,15 +52,19 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
                 },
                 child: const Text("Basic Notification "),
               ),
-              IconButton(
-                onPressed: () async {
-                  await LocalNotificationServices.cancelNotification(0);
-                },
-                icon: const Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                ),
-              )
+             IconButton(
+  onPressed: () async {
+    await LocalNotificationServices.cancelNotification(0);
+    _animationController.forward(from: 0.0);
+  },
+  icon: ScaleTransition(
+    scale: _animationController,
+    child: Icon(
+      Icons.cancel,
+      color: Colors.red,
+    ),
+  ),
+)
             ],
           ),
           Row(
@@ -100,4 +111,9 @@ class _TestLocalNotificationState extends State<TestLocalNotification> {
       ),
     );
   }
+  @override
+void dispose() {
+  _animationController.dispose();
+  super.dispose();
+}
 }

@@ -7,7 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationServices {
   static FlutterLocalNotificationsPlugin
-      flutterLocalNotificationsServicePlugin =
+      flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
       static StreamController<NotificationResponse> streamController=StreamController();
       static void onTap(NotificationResponse notifyResponse) {
@@ -28,7 +28,7 @@ class LocalNotificationServices {
       android: androidInitializationSettings,
       iOS: iosInitializationSettings,
     );
-    await flutterLocalNotificationsServicePlugin.initialize(
+    await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveBackgroundNotificationResponse: onTap,
       onDidReceiveNotificationResponse: onTap,
@@ -48,7 +48,7 @@ class LocalNotificationServices {
       android: androidNotificationDetails,
       iOS: const DarwinNotificationDetails(),
     );
-    await flutterLocalNotificationsServicePlugin.show(
+    await flutterLocalNotificationsPlugin.show(
       0,
       'title',
       'body',
@@ -69,7 +69,7 @@ class LocalNotificationServices {
       android: androidNotificationDetails,
       iOS: DarwinNotificationDetails(),
     );
-    await flutterLocalNotificationsServicePlugin.periodicallyShow(
+    await flutterLocalNotificationsPlugin.periodicallyShow(
       1,
       'Periodicly',
       'body',
@@ -80,7 +80,7 @@ class LocalNotificationServices {
   }
 
   static Future<void> cancelNotification(int id) async {
-    await flutterLocalNotificationsServicePlugin.cancel(id);
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 
   static Future<void> sendScheduledNotification() async {
@@ -101,7 +101,7 @@ class LocalNotificationServices {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
     print(tz.local.name);
-    await flutterLocalNotificationsServicePlugin.zonedSchedule(
+    await flutterLocalNotificationsPlugin.zonedSchedule(
       2,
       'title',
       'body',
